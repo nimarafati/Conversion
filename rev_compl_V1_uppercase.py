@@ -1,3 +1,9 @@
+########################################################
+# nimarafati@gmail.com	                               #
+# Please cite the script by referencing to github      #
+# repository 					       #
+########################################################
+
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import argparse 
