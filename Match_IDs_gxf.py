@@ -1,10 +1,12 @@
 ########################################################
 # nimarafati@gmail.com	                               #
 # Please cite the script by referencing to github      #
-# repository 					                       #
+# repository 					       #
 ########################################################
 import argparse
 import re
+import sys
+import os
 
 parser = argparse.ArgumentParser(description="This script matches IDs from key file and gff/gtf file.")
 parser.add_argument("--key_file", "-key", help = "A key file consists of IDs")
@@ -15,7 +17,7 @@ parser.add_argument("--output", "-o", help = "Output file")
 args=parser.parse_args()
 
 key_dict = {}
-keys = open(args.key, 'r')
+keys = open(args.key_file, 'r')
 for line in keys:
     print(line)
-    sys.exit('test')
+    sys.exit()
