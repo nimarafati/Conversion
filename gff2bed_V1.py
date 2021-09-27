@@ -35,7 +35,7 @@ for line in fh:
         start = int(line_list[3]) - 1 
 	end = line_list[4]
 	strand = line_list[6]
-	if feature == 'mRNA':
+	if feature == 'mRNA' or feature == 'transcript':
 		attributes = line_list[8]
 	        record = str(chromosome) +  '\t' + str(start) + '\t' + str(end) + '\t' +  str(strand) + '\t'
         	attributes_dict = dict(x.split("=") for x in attributes.split(";"))
