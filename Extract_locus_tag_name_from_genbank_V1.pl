@@ -6,25 +6,28 @@
 # will be printed on screen.
 # use: script file_name 
 ###########################################################################
-
+$new=0;
 open(inF,$ARGV[0]);
 while(<inF>){
 	$line = $_;
 	chomp($line);
 	@lineArr0=split("\t",$line);
-	if($line =~ /^\s+\/locus_tag/){
+	if($line =~ /^DEFINITION/){
+		$new=1;
+                $line=~ m/(DEFINITION)\s+.*(\(.*\)).*/;
+                $gene_id = $2;
+                $gene_id =~ s/\(//g;
+		$gene_id =~ s/\)//g;
+        }elsif($line =~ /^\s+\/locus_tag/){
 		$line=~ m/.*=(.*)/;
 		$gene_name = $1;
 		$gene_name =~ s/\"//g;
-	}elsif($line =~ /^\s+\/DEFINITION=/){
-		$line=~ m/.*:(.*)/;
-		$gene_id = $1;
-		$gene_id =~ s/\"//g;
-	}else{
-		$gene_name = "";
-		$gene_id = "";
+#	}else{
+#		$gene_name = "";
+#		$gene_id = "";
 	} 
-	if($gene_name ne "" && $gene_id ne ""){
+	if($gene_name ne "" && $gene_id ne "" && $new == 1){
 		print "$gene_name\t$gene_id\n";
+		$new=0;
 	}
 }
