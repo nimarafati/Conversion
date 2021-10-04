@@ -31,3 +31,4 @@ while(<inF>){
 		$new=0;
 	}
 }
+print "$gene_name\t$gene_id\n";
