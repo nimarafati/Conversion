@@ -1,0 +1,14 @@
+```{r, echo = T, eval = T}
+figlist <- list_png(path = "{{path}}", sample = "{{sample}}", analysis = "{{analysis}}")
+ojs_define(figlist_obs_{{sample}} = figlist)
+```
+
+```{ojs}
+//| echo: true
+//| eval: true
+//| code-line-numbers: true
+viewof go_file_{{sample}}_{{analysis}} = Inputs.select(figlist_obs_{{sample}}, { label: "Choose GO category" })
+html`<img src="{{path}}/{{sample}}/{{analysis}}/${go_file_{{sample}}_{{analysis}}}.png" width="50%" height="50%"></img>`
+```
+
+
