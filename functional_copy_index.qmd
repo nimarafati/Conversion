@@ -1,0 +1,97 @@
+---
+title: "test"
+author: "Nima Rafati"
+date: today
+title-block-banner: true
+reference-location: margin
+citation-location: margin
+format:
+    html:
+        theme: cosmo
+        toc: true
+        toc-location: left
+        self-contained: false
+        embed-resources: true
+execute: 
+  echo: false
+  warning: false
+comments: 
+    hypothesis: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r local-test, eval = T}
+cons <- list.files(path = "results/Sample1/GO/", pattern = ".png")
+con1 <- as.list(gsub(".png", "", cons))
+ojs_define(GO_terms1 = con1)
+ojs_define(tmp_path1 = 'results/Sample1/GO/')
+
+```
+
+```{ojs}
+//| echo: true
+//| eval: true
+viewof go_file1 = Inputs.select(GO_terms1, { label: "Choose GO category" })
+```
+
+```{ojs}
+//| echo: true
+//| eval: true
+html`<img src="${tmp_path1}${go_file1}.png" width="50%" height="50%"></img>`
+```
+
+SAMPLESS GOO
+
+```{r function, echo = T, eval = T}
+list_png <- function(path, sample, analysis){
+  cons <- list.files(path = paste0(path, '/', sample, '/', analysis, '/'), pattern = ".png")
+  con1 <- as.list(gsub(".png", "", cons))
+  return(con1)
+}
+# figlist <- list_png(path = "/Users/nimra236/untitled/tmp/", sample = "Sample1", analysis = "GO")
+# ojs_define(figlist_obs = figlist)
+```
+
+```{r Sample1, results='asis', eval = T, echo = T}
+temp_code <- mapply(function(path, sample, analysis) {
+  knitr::knit_expand("figures.qmd")}, 
+  c("results"), 
+  c("Sample1"), 
+  c("GO"))
+res <- knitr::knit_child(text = unlist(temp_code), quiet = TRUE)
+cat(res, sep = '\n')
+```
+
+```{r Sample2, results='asis', eval = T, echo = T}
+temp_code <- mapply(function(path, sample, analysis) {
+  knitr::knit_expand("figures.qmd")}, 
+  c("results"), 
+  c("Sample2"), 
+  c("GO"))
+res <- knitr::knit_child(text = unlist(temp_code), quiet = TRUE)
+cat(res, sep = '\n')
+```
